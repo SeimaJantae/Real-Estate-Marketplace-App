@@ -21,7 +21,7 @@ const schema = new Schema(
       unique: true,
       lowercase: true,
     },
-    passworld: {
+    password: {
       type: String,
       required: true,
       maxLenght: 256,
@@ -46,7 +46,10 @@ const schema = new Schema(
     },
     enquiredProperties: [{ type: ObjectId, ref: "Ad" }],
     wishList: [{ type: ObjectId, ref: "Ad" }],
-    resetCode: "",
+    resetCode: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
