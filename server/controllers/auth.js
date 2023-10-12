@@ -196,3 +196,57 @@ export const currentUser = async (req, res) => {
     return res.status(403).json({ error: "Unauthorized" });
   }
 };
+
+export const publicProfile = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    user.password = undefined;
+    user.resetCode = undefined;
+    return res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.json({ error: "User not found" });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    if (!password) {
+      return res.json({ error: "Password is required" });
+    }
+
+    if (password && password?.length < 6) {
+      return res.json({ error: "Password should be at least 6 characters" });
+    }
+
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      password: await hashPassword(password),
+    });
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    return res.status(403).json({ error: "Can not update password" });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+      new: true,
+    });
+    user.password = undefined;
+    user.resetCode = undefined;
+    return res.json(user);
+  } catch (err) {
+    if (err.codeName === "DuplicateKey") {
+      // err.codeName === "DuplicateKey" check from terimal
+      return res.json({ error: "Username or emailf is taken" });
+    } else {
+      console.log(err);
+      return res.status(403).json({ error: "Can not update profile" });
+    }
+  }
+};
