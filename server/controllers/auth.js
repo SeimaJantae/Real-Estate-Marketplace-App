@@ -142,7 +142,7 @@ export const forgotPassword = async (req, res) => {
         emailTemplate(
           email,
           `<p>Please click the link below to access your account.</p>
-          <a href="${config.CLIENT_URL}/auth/access-password/${token}">Access my account</a>`,
+          <a href="${config.CLIENT_URL}/auth/access-account/${token}">Access my account</a>`,
           config.REPLY_TO,
           "Access your account"
         ),

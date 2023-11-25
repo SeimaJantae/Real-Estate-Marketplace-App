@@ -3,15 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth";
 import { Link } from "react-router-dom";
 
-function Login() {
-  // context
-  const [auth, setAuth] = useAuth();
+function ForgotPassworld() {
   // state
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   // hook
   const navigate = useNavigate();
@@ -19,17 +15,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //console.log(email, password);
       setLoading(true);
-      const { data } = await axios.post(`/login`, { email, password });
+      const { data } = await axios.post(`/forgot-password`, { email });
 
       if (data?.error) {
         toast.error(data.error);
         setLoading(false);
       } else {
-        setAuth(data);
-        localStorage.setItem("auth", JSON.stringify(data));
-        toast.success("Login successfully.");
+        toast.success("Please check your email for password reset link.");
         setLoading(false);
         navigate("/");
       }
@@ -43,7 +36,7 @@ function Login() {
     <div>
       <div className="container">
         <div className="col-lg-4 offset-lg-4">
-          <h4 className="mt-4 text-center">Login</h4>
+          <h4 className="mt-4 text-center">Forgot password</h4>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="InputEmail" className="form-label mt-4">
@@ -66,30 +59,13 @@ function Login() {
                 We'll never share your email with anyone else.
               </small>
             </div>
-            <div className="form-group">
-              <label htmlFor="InputPassword" className="form-label mt-4">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="InputPassword"
-                placeholder="Password"
-                autoComplete="off"
-                required
-                autoFocus
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
+
             <button disabled={loading} type="submit" className="btn btn-primary mt-4 col-12">
-              {loading ? "Waiting..." : "Login"}
+              {loading ? "Waiting..." : "Submit"}
             </button>
             <div className="d-flex justify-content-center mt-4">
-              <Link className="text-primary" to="/auth/forgot-password">
-                Forgot password?
+              <Link className="text-primary" to="/login">
+                Back to login
               </Link>
             </div>
           </form>
@@ -99,4 +75,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassworld;

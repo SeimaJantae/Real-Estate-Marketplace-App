@@ -1,7 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useAuth } from "../../context/auth";
+import { useNavigate } from "react-router-dom";
 function Main() {
+  // context
+  const [auth, setAuth] = useAuth();
+  // hooks
+  const navigate = useNavigate();
+
+  const logout = () => {
+    setAuth({ user: null, token: "", refreshToken: "" });
+    localStorage.removeItem("auth");
+    navigate("/");
+  };
+
+  const loggedIn = auth.user != null && auth.token !== "" && auth.refreshToken !== "";
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -27,16 +40,23 @@ function Main() {
                 <span className="visually-hidden">(current)</span>
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/register">
-                Register
-              </NavLink>
-            </li>
+
+            {!loggedIn ? (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
 
             <li className="nav-item dropdown">
               <a
@@ -67,36 +87,39 @@ function Main() {
             </li>
           </ul>
           <form className="d-flex">
-            <input
-              className="form-control me-sm-2"
-              type="search"
-              placeholder="Search"
-            />
+            <input className="form-control me-sm-2" type="search" placeholder="Search" />
             <button className="btn btn-secondary my-2 my-sm-0" type="submit">
               Search
             </button>
           </form>
-          <div className="dropdown mx-5">
-            <a
-              className="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-              to="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              User
-            </a>
-            <div className="dropdown-menu">
-              <NavLink className="dropdown-item" to="/dashboard">
-                Dashboard
-              </NavLink>
-              <div className="dropdown-divider" />
-              <NavLink className="dropdown-item" to="/logout">
-                Logout
-              </NavLink>
-            </div>
-          </div>
+          {loggedIn ? (
+            <>
+              {" "}
+              <div className="dropdown mx-5">
+                <a
+                  className="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  to="#"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {auth?.user?.name ? auth.user.name : auth.user.username}
+                </a>
+                <div className="dropdown-menu">
+                  <NavLink className="dropdown-item" to="/dashboard">
+                    Dashboard
+                  </NavLink>
+                  <div className="dropdown-divider" />
+                  <a onClick={logout} className="dropdown-item">
+                    Logout
+                  </a>
+                </div>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </nav>

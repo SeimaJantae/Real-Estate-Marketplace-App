@@ -17,7 +17,7 @@ export const emailTemplate = (email, content, replyTo, subject) => {
           Data: `
               <html>
                 <div style="${style}">
-                    <h1 style = "${style}">Welcome to Real Estate App</h1>
+                    <h1>From REMP</h1>
                     ${content}
                     <p>&copy; ${new Date().getFullYear()}</p>
                 </div>
