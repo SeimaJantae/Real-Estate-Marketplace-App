@@ -8,6 +8,9 @@ import { Toaster } from "react-hot-toast";
 import AccountActivate from "./pages/auth/AccountActivate";
 import ForgotPassworld from "./pages/auth/ForgotPassworld";
 import AccessAccount from "./pages/auth/AccessAccount";
+import DashBoard from "./pages/user/DashBoard";
+import AdCreate from "./pages/user/ad/AdCreate";
+import PrivateRoute from "./components/routers/PrivateRoute";
 
 function App() {
   return (
@@ -22,6 +25,10 @@ function App() {
           <Route path="/auth/account-activate/:token" element={<AccountActivate />} />
           <Route path="/auth/forgot-password" element={<ForgotPassworld />} />
           <Route path="/auth/access-account/:token" element={<AccessAccount />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="dashboard" element={<DashBoard />} />
+            <Route path="ad/create" element={<AdCreate />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

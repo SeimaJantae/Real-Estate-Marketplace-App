@@ -15,6 +15,14 @@ function Main() {
   };
 
   const loggedIn = auth.user != null && auth.token !== "" && auth.refreshToken !== "";
+
+  const handlePostAdClick = () => {
+    if (loggedIn) {
+      navigate("/ad/create");
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -39,6 +47,11 @@ function Main() {
                 Home
                 <span className="visually-hidden">(current)</span>
               </NavLink>
+            </li>
+            <li className="nav-item pointer">
+              <a onClick={handlePostAdClick} className="nav-link" to="/login">
+                Post Ad
+              </a>
             </li>
 
             {!loggedIn ? (
