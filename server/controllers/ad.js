@@ -1,6 +1,9 @@
 // controllers/ad.js
 import { nanoid } from "nanoid";
 import * as config from "../config.js";
+import Ad from "../models/ad.js";
+import User from "../models/user.js";
+import slugify from "slugify";
 
 export const uploadImage = async (req, res) => {
   try {
@@ -53,5 +56,52 @@ export const removeImage = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const create = async (req, res) => {
+  try {
+    const { photos, description, address, price, type } = req.body;
+
+    if (!photos?.length) {
+      return res.json({ error: "Photos are required" });
+    }
+    if (!price) {
+      return res.json({ error: "Price is required" });
+    }
+    if (!type) {
+      return res.json({ error: "Is property house or land?" });
+    }
+    if (!address) {
+      return res.json({ error: "Address is required" });
+    }
+    if (!description) {
+      return res.json({ error: "Description is required" });
+    }
+
+    const ad = await new Ad({
+      ...req.body,
+      slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`),
+      postedBy: req.user._id,
+    }).save();
+
+    // make user role to Seller
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $addToSet: { role: "Seller" },
+      },
+      { new: true }
+    );
+    user.password = undefined;
+    user.resetCode = undefined;
+    res.json({
+      ad,
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({ error: "Something went wrong. Try later." });
   }
 };

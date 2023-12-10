@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AdForm = ({ action, type }) => {
   // state
@@ -14,7 +17,29 @@ const AdForm = ({ action, type }) => {
     title: "",
     description: "",
     loading: false,
+    type,
+    action,
   });
+
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    try {
+      setAd({ ...ad, loading: true });
+      const { data } = await axios.post("/ad", ad);
+      if (data?.error) {
+        toast.error(data.error);
+        setAd({ ...ad, loading: false });
+      } else {
+        toast.error("Ad create successfully");
+        setAd({ ...ad, loading: false });
+        //navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+      setAd({ ...ad, loading: false });
+    }
+  };
   return (
     <div className="mt-4 col-lg-4 offset-lg-4">
       <form>
@@ -67,11 +92,11 @@ const AdForm = ({ action, type }) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" onClick={handleClick}>
           Submit
         </button>
       </form>
-      {JSON.stringify(ad)}
+      {/* {JSON.stringify(ad)} */}
     </div>
   );
 };
