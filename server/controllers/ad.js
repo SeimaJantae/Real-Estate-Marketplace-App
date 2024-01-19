@@ -7,7 +7,7 @@ import slugify from "slugify";
 
 export const uploadImage = async (req, res) => {
   try {
-    console.log(req.body);
+    //console.log(req.body);
     const { image } = req.body;
     if (!image) return res.status(400).send("No image");
 
@@ -103,5 +103,73 @@ export const create = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.json({ error: "Something went wrong. Try later." });
+  }
+};
+
+export const ads = async (req, res) => {
+  try {
+    const adsForSell = await Ad.find({ action: "Sell", published: true })
+      .select("-photos.Key -photos.key -photos.ETag -photos.Bucket")
+      .populate("postedBy", "name username email phone company")
+      .sort({ createdAt: -1 })
+      .limit(12);
+
+    const adsForRent = await Ad.find({ action: "Rent", published: true })
+      .select("-photos.Key -photos.key -photos.ETag -photos.Bucket")
+      .populate("postedBy", "name username email phone company")
+      .sort({ createdAt: -1 })
+      .limit(12);
+
+    res.json({ adsForSell, adsForRent });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const read = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const ad = await Ad.findOne({ slug })
+      // .select("-photos.Key -photos.key -photos.ETag -photos.Bucket")
+      .populate("postedBy", "name username email phone company photo.Location");
+
+    res.json({ ad });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addToWishlist = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $addToSet: { wishList: req.body.adId },
+      },
+      { new: true }
+    );
+    user.password = undefined;
+    user.resetCode = undefined;
+    res.json(user);
+  } catch (error) {
+    console.log(err);
+  }
+};
+
+export const removeFromWishlist = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: { wishList: req.params.adId },
+      },
+      { new: true }
+    );
+    user.password = undefined;
+    user.resetCode = undefined;
+    res.json(user);
+  } catch (error) {
+    console.log(err);
   }
 };

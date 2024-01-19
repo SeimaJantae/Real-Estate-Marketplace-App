@@ -15,6 +15,7 @@ import SellHouse from "./pages/user/ad/SellHouse";
 import SellLand from "./pages/user/ad/SellLand";
 import RentHouse from "./pages/user/ad/RentHouse";
 import RentLand from "./pages/user/ad/RentLand";
+import AdView from "./pages/AdView";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="ad/create/rent/house" element={<RentHouse />} />
             <Route path="ad/create/rent/land" element={<RentLand />} />
           </Route>
+          <Route path="/ad/:slug" element={<AdView />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

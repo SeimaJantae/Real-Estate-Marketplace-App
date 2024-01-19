@@ -23,7 +23,8 @@ const AdForm = ({ action, type }) => {
 
   const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
     try {
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
@@ -31,9 +32,9 @@ const AdForm = ({ action, type }) => {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
-        toast.error("Ad create successfully");
+        toast.success("Ad create successfully");
         setAd({ ...ad, loading: false });
-        //navigate("/dashboard");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -92,8 +93,8 @@ const AdForm = ({ action, type }) => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>
-          Submit
+        <button type="submit" className={`btn btn-primary ${ad.loading ? "disabled" : ""}`} onClick={handleClick}>
+          {ad.loading ? "Saving" : "Create"}
         </button>
       </form>
       {/* {JSON.stringify(ad)} */}
