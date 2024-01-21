@@ -111,7 +111,7 @@ const AdView = () => {
           <div className="mt-5">
             <h3> {ad.title}</h3>
             <h3>{ad.address}</h3>
-            <h5>{ad.description}</h5>
+            <p>{ad.description}</p>
           </div>
           <div className="mt-5">
             <h3>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h3>

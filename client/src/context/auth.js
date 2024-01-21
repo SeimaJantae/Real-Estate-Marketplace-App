@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
   // config axios
   axios.defaults.baseURL = BACKEND_API;
   axios.defaults.headers.common["Authorization"] = auth.token;
-  axios.defaults.headers.common["refresh-token"] = auth.refreshToken;
+  axios.defaults.headers.common["refresh_token"] = auth.refreshToken;
 
   axios.interceptors.response.use(
     (res) => {

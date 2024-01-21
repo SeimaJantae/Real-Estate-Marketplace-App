@@ -21,11 +21,11 @@ const AdCreate = () => {
 
   return (
     <div className="container-lg">
-      <h5 className="pt-2">Ad Create</h5>
       <SideBar></SideBar>
+      <h5 className="pt-2">Ad Create</h5>
       <div className="d-flex justify-content-center align-items-satrt vh-100 mt-4">
         <div className="col-lg-6">
-          <button onClick={handleSell} type="button" class="btn btn-outline-primary btn-lg col-12 p-5">
+          <button onClick={handleSell} type="button" className="btn btn-outline-primary btn-lg col-12 p-5">
             Sell
           </button>
           {sell && (
@@ -33,14 +33,14 @@ const AdCreate = () => {
               <button
                 onClick={() => navigate("/ad/create/sell/house")}
                 type="button"
-                class="btn btn-outline-primary col-6 p-5"
+                className="btn btn-outline-primary col-6 p-5"
               >
                 House
               </button>
               <button
                 onClick={() => navigate("/ad/create/sell/land")}
                 type="button"
-                class="btn btn-outline-primary col-6 p-5"
+                className="btn btn-outline-primary col-6 p-5"
               >
                 Land
               </button>
@@ -48,7 +48,7 @@ const AdCreate = () => {
           )}
         </div>
         <div className="col-lg-6">
-          <button onClick={handleRent} type="button" class="btn btn-outline-primary btn-lg col-12 p-5">
+          <button onClick={handleRent} type="button" className="btn btn-outline-primary btn-lg col-12 p-5">
             Rent
           </button>
           {rent && (
@@ -56,14 +56,14 @@ const AdCreate = () => {
               <button
                 onClick={() => navigate("/ad/create/rent/house")}
                 type="button"
-                class="btn btn-outline-primary col-6 p-5"
+                className="btn btn-outline-primary col-6 p-5"
               >
                 House
               </button>
               <button
                 onClick={() => navigate("/ad/create/rent/land")}
                 type="button"
-                class="btn btn-outline-primary col-6 p-5"
+                className="btn btn-outline-primary col-6 p-5"
               >
                 Land
               </button>

@@ -30,7 +30,7 @@ const ImageUpload = ({ ad, setAd }) => {
                   uploading: false,
                 }));
               } catch (err) {
-                console.log("photo upload err => ", err);
+                //console.log("photo upload err => ", err);
                 setAd({ ...ad, uploading: false });
               }
             },

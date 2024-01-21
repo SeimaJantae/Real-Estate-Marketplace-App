@@ -15,6 +15,16 @@ const SideBar = () => {
             Create Ad
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/user/profile">
+            Profile
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/user/settings">
+            Settings
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
