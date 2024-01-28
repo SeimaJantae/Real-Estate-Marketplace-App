@@ -26,25 +26,28 @@ function App() {
       <AuthProvider>
         <Main />
         <Toaster />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/auth/account-activate/:token" element={<AccountActivate />} />
-          <Route path="/auth/forgot-password" element={<ForgotPassworld />} />
-          <Route path="/auth/access-account/:token" element={<AccessAccount />} />
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="dashboard" element={<DashBoard />} />
-            <Route path="ad/create" element={<AdCreate />} />
-            <Route path="ad/create/sell/house" element={<SellHouse />} />
-            <Route path="ad/create/sell/land" element={<SellLand />} />
-            <Route path="ad/create/rent/house" element={<RentHouse />} />
-            <Route path="ad/create/rent/land" element={<RentLand />} />
-            <Route path="user/profile" element={<Profile />} />
-            <Route path="user/settings" element={<Settings />} />
-          </Route>
-          <Route path="/ad/:slug" element={<AdView />} />
-        </Routes>
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/auth/account-activate/:token" element={<AccountActivate />} />
+            <Route path="/auth/forgot-password" element={<ForgotPassworld />} />
+            <Route path="/auth/access-account/:token" element={<AccessAccount />} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="dashboard" element={<DashBoard />} />
+              <Route path="ad/create" element={<AdCreate />} />
+              <Route path="ad/create/sell/house" element={<SellHouse />} />
+              <Route path="ad/create/sell/land" element={<SellLand />} />
+              <Route path="ad/create/rent/house" element={<RentHouse />} />
+              <Route path="ad/create/rent/land" element={<RentLand />} />
+              <Route path="user/profile" element={<Profile />} />
+              <Route path="user/settings" element={<Settings />} />
+            </Route>
+            <Route path="/ad/:slug" element={<AdView />} />
+          </Routes>
+        </div>
+
         <Footer />
       </AuthProvider>
     </BrowserRouter>

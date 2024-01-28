@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function AdCard({ ad }) {
   return (
     <div className="col-lg-3 p-4 gx-4">
-      <Link to={`/ad/${ad.slug}`}>
+      <Link to={`/ad/${ad.slug}`} style={{ textDecoration: "none" }}>
         <Badge.Ribbon text={`${ad?.type} for ${ad?.action}`} color={ad?.action === "Sell" ? "blue" : "red"}>
           <div className="card hoverable shadow">
             <img
@@ -15,8 +15,8 @@ export default function AdCard({ ad }) {
             <div className="card-body">
               <div className="d-flex flex-column">
                 <h4>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h4>
-                <small>{ad?.address}</small>
                 <small>{ad?.title}</small>
+                <small>{ad?.address}</small>
               </div>
             </div>
           </div>

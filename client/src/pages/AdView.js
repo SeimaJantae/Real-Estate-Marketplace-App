@@ -9,6 +9,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { useAuth } from "../context/auth";
 import toast from "react-hot-toast";
+import ContactSeller from "../components/forms/ContactSeller";
 
 dayjs.extend(relativeTime);
 
@@ -92,13 +93,14 @@ const AdView = () => {
   return (
     <div className="container-lg">
       <div className="row mt-4">
+        <div className="col-lg-8"> {<ImageGallery items={getImages(ad?.photos)} />}</div>
         <div className="col-lg-4">
           <div className="d-flex justify-content-between me-4">
-            <div>
+            <div className="d-flex">
               <button className="btn btn-info disabled">
                 {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
               </button>
-              <p className="h6 mt-2">{ad?.sold ? "Off market" : "In market"}</p>
+              <p className="h6 mt-2 ms-2">{ad?.sold ? "Off market" : "In market"}</p>
             </div>
             <>
               {auth.user?.wishList?.includes(ad?._id) ? (
@@ -108,19 +110,19 @@ const AdView = () => {
               )}
             </>
           </div>
-          <div className="mt-5">
+          <div className="mt-4 lh-1">
             <h3> {ad.title}</h3>
-            <h3>{ad.address}</h3>
+            <p>@ {ad.address}</p>
             <p>{ad.description}</p>
           </div>
-          <div className="mt-5">
-            <h3>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h3>
+          <div className="mt-4">
+            <h4>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h4>
             <p className="d-flex justify-content-between mt-2 me-4">
               <span>Added {dayjs(ad?.createdAt).fromNow()}</span> <span>{ad?.views} Views</span>
             </p>
           </div>
+          <ContactSeller ad={ad} />
         </div>
-        <div className="col-lg-8"> {<ImageGallery items={getImages(ad?.photos)} />}</div>
       </div>
     </div>
   );

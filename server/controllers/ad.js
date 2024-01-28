@@ -4,6 +4,7 @@ import * as config from "../config.js";
 import Ad from "../models/ad.js";
 import User from "../models/user.js";
 import slugify from "slugify";
+import { emailTemplate } from "../helpers/email.js";
 
 export const uploadImage = async (req, res) => {
   try {
@@ -170,6 +171,48 @@ export const removeFromWishlist = async (req, res) => {
     user.resetCode = undefined;
     res.json(user);
   } catch (error) {
+    console.log(err);
+  }
+};
+
+export const contactSeller = async (req, res) => {
+  try {
+    const { name, email, message, phone, adId } = req.body;
+    const ad = await Ad.findById(adId).populate("postedBy", "email");
+
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      $addToSet: { enquiredProperties: adId },
+    });
+
+    if (!user) {
+      return res.json({ error: "Could not find user with that email" });
+    } else {
+      // send email
+      config.AWSSES.sendEmail(
+        emailTemplate(
+          ad.postedBy.email,
+          ` <h4> Customer details </h4>
+          <p>Name: ${name}</p>
+          <p>Email: ${name}</p> 
+          <p>Phone: ${name}</p>
+          <p>Message: ${name}</p>
+          <p>You have received a new consumer contact</p>
+        <a href = "${config.CLIENT_URL}/ad/${ad.slug}">View property ${ad.type} for ${ad.action}: ${ad.title}</a>`,
+          email,
+          "New contact received"
+        ),
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.json({ ok: false });
+          } else {
+            console.log(data);
+            return res.json({ ok: true });
+          }
+        }
+      );
+    }
+  } catch (err) {
     console.log(err);
   }
 };
