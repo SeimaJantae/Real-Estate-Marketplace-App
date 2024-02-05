@@ -5,6 +5,7 @@ import Ad from "../models/ad.js";
 import User from "../models/user.js";
 import slugify from "slugify";
 import { emailTemplate } from "../helpers/email.js";
+import ad from "../models/ad.js";
 
 export const uploadImage = async (req, res) => {
   try {
@@ -211,6 +212,67 @@ export const contactSeller = async (req, res) => {
           }
         }
       );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const userAds = async (req, res) => {
+  try {
+    const ads = await Ad.find({ postedBy: req.user._id })
+      .populate("postedBy", "name username email phone company")
+      .sort({ createdAt: -1 });
+
+    res.json({ ads, total: ads.length });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const { photos, address, price, title, description, type } = req.body;
+    const ad = await Ad.findById(req.params.adId);
+    const owner = req.user._id == ad?.postedBy;
+    if (!owner) {
+      return res.json({ error: "Permission denide" });
+    } else {
+      // validation
+      if (!photos?.length) {
+        return res.json({ error: "Photos are required" });
+      }
+      if (!price) {
+        return res.json({ error: "Price is required" });
+      }
+      if (!type) {
+        return res.json({ error: "Is property house or land?" });
+      }
+      if (!address) {
+        return res.json({ error: "Address is required" });
+      }
+      if (!description) {
+        return res.json({ error: "Description is required" });
+      }
+      await ad.updateOne({ ...req.body, slug: ad.slug });
+    }
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const ad = await Ad.findById(req.params.adId);
+    const owner = req.user._id == ad?.postedBy;
+
+    if (!owner) {
+      return res.json({ error: "Permission denied" });
+    } else {
+      await Ad.findByIdAndRemove(ad._id);
+      return res.json({ ok: true });
     }
   } catch (err) {
     console.log(err);

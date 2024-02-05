@@ -93,7 +93,11 @@ const AdForm = ({ action, type }) => {
           />
         </div>
 
-        <button type="submit" className={`btn btn-primary ${ad.loading ? "disabled" : ""}`} onClick={handleClick}>
+        <button
+          type="submit"
+          className={`btn btn-primary ${ad.loading ? "disabled" : ""} col-12`}
+          onClick={handleClick}
+        >
           {ad.loading ? "Saving" : "Create"}
         </button>
       </form>
