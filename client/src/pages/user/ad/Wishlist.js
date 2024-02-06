@@ -1,23 +1,20 @@
 import React from "react";
-import SideBar from "../../components/nav/SideBar";
-import { useAuth } from "../../context/auth";
+import SideBar from "../../../components/nav/SideBar";
+import { useAuth } from "../../../context/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import UserAdCard from "../../components/cards/UserAdCard";
+import AdCard from "../../../components/cards/AdCard";
 
-const DashBoard = () => {
+const Wishlist = () => {
   // context
   const [auth, setAuth] = useAuth();
-  const seller = auth.user?.role?.includes("Seller");
   // state
   const [ads, setAds] = useState([]);
-  const [total, setTotal] = useState(0);
-
   const fetchAds = async (req, res) => {
     try {
-      const { data } = await axios.get("/user-ads");
+      const { data } = await axios.get("/wishlist-ads");
+      console.log(data.ads);
       setAds(data.ads);
-      setTotal(data.total);
     } catch (error) {
       console.log(error);
     }
@@ -30,21 +27,21 @@ const DashBoard = () => {
   return (
     <div className="container-lg">
       <SideBar></SideBar>
-      <h5 className="pt-2">Dashboard</h5>
-      {!seller ? (
+      <h5 className="pt-2">Wishlist</h5>
+      {!ads?.length ? (
         <>
           <div className="d-flex justify-content-center align-item-center vh-100">
-            <p> Welcome REMP app, {auth.user?.name ? auth.user?.name : auth.user?.username}</p>
+            <p> You have not liked any ads yet, {auth.user?.name ? auth.user?.name : auth.user?.username}</p>
           </div>
         </>
       ) : (
         <>
           <div className="text-center">
-            <p>Total {total} ads found</p>
+            <p>You have liked {ads?.length} ads</p>
           </div>
           <div className="row">
             {ads?.map((ad) => (
-              <UserAdCard ad={ad} key={ad._id} />
+              <AdCard ad={ad} key={ad._id} />
             ))}
           </div>
         </>
@@ -53,4 +50,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Wishlist;

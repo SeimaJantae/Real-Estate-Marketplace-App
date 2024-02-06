@@ -17,4 +17,7 @@ router.get("/user-ads", requireSignIn, ad.userAds);
 router.put("/ad/:adId", requireSignIn, ad.update);
 router.delete("/ad/:adId", requireSignIn, ad.remove);
 
+router.get("/enquired-ads", requireSignIn, ad.enquiredAds);
+router.get("/wishlist-ads", requireSignIn, ad.wishlistAds);
+
 export default router;

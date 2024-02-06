@@ -11,6 +11,16 @@ const SideBar = () => {
           </NavLink>
         </li>
         <li className="nav-item">
+          <NavLink className="nav-link" to="/user/wishlist">
+            Wishlist
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/user/enquires">
+            Enquiries
+          </NavLink>
+        </li>
+        <li className="nav-item">
           <NavLink className="nav-link" to="/ad/create">
             Create Ad
           </NavLink>

@@ -278,3 +278,23 @@ export const remove = async (req, res) => {
     console.log(err);
   }
 };
+
+export const enquiredAds = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const ads = await Ad.find({ _id: user.enquiredProperties }).sort({ createdAt: -1 });
+    res.json({ ads: ads });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const wishlistAds = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const ads = await Ad.find({ _id: user.wishList }).sort({ createdAt: -1 });
+    res.json({ ads: ads });
+  } catch (error) {
+    console.log(error);
+  }
+};
