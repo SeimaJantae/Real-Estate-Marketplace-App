@@ -16,13 +16,6 @@ function Main() {
 
   const loggedIn = auth.user != null && auth.token !== "" && auth.refreshToken !== "";
 
-  const handlePostAdClick = () => {
-    if (loggedIn) {
-      navigate("/ad/create");
-    } else {
-      navigate("/login");
-    }
-  };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container">
@@ -48,11 +41,17 @@ function Main() {
                 <span className="visually-hidden">(current)</span>
               </NavLink>
             </li>
-            <li className="nav-item pointer">
-              <a onClick={handlePostAdClick} className="nav-link" to="/login">
-                Post Ad
-              </a>
-            </li>
+            {loggedIn ? (
+              <>
+                <li className="nav-item pointer">
+                  <NavLink className="nav-link" to="/dashboard">
+                    Dashboard
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
 
             {!loggedIn ? (
               <>
@@ -70,41 +69,7 @@ function Main() {
             ) : (
               <></>
             )}
-
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-                href="#"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div className="dropdown-menu">
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="#">
-                  Separated link
-                </a>
-              </div>
-            </li>
           </ul>
-          <form className="d-flex">
-            <input className="form-control me-sm-2" type="search" placeholder="Search" />
-            <button className="btn btn-secondary my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
           {loggedIn ? (
             <>
               {" "}
@@ -120,10 +85,6 @@ function Main() {
                   {auth?.user?.name ? auth.user.name : auth.user.username}
                 </a>
                 <div className="dropdown-menu">
-                  <NavLink className="dropdown-item" to="/dashboard">
-                    Dashboard
-                  </NavLink>
-                  <div className="dropdown-divider" />
                   <a onClick={logout} className="dropdown-item">
                     Logout
                   </a>
