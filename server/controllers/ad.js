@@ -194,9 +194,9 @@ export const contactSeller = async (req, res) => {
           ad.postedBy.email,
           ` <h4> Customer details </h4>
           <p>Name: ${name}</p>
-          <p>Email: ${name}</p> 
-          <p>Phone: ${name}</p>
-          <p>Message: ${name}</p>
+          <p>Email: ${email}</p> 
+          <p>Phone: ${phone}</p>
+          <p>Message: ${message}</p>
           <p>You have received a new consumer contact</p>
         <a href = "${config.CLIENT_URL}/ad/${ad.slug}">View property ${ad.type} for ${ad.action}: ${ad.title}</a>`,
           email,
