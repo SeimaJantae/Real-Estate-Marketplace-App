@@ -23,9 +23,11 @@ const adSchema = new Schema(
       lowercase: true,
       unique: true,
     },
-    description: {},
+    description: {
+      type: String,
+    },
     postedBy: { type: ObjectId, ref: "User" },
-    sold: { type: Boolean, default: false },
+    // sold: { type: Boolean, default: false },
     published: { type: Boolean, default: true },
 
     type: {
@@ -43,5 +45,7 @@ const adSchema = new Schema(
   },
   { timestamps: true }
 );
-
-export default model("Ad", adSchema);
+adSchema.index({ address: "text", title: "text", description: "text" }); // make key: value can seach by text in mongoDB
+const Ad = model("Ad", adSchema);
+Ad.createIndexes();
+export default Ad;

@@ -31,13 +31,13 @@ const Enquiries = () => {
       {!ads?.length ? (
         <>
           <div className="d-flex justify-content-center align-item-center vh-100">
-            <p> You have not contacted any ads, {auth.user?.name ? auth.user?.name : auth.user?.username}</p>
+            <p> You have not enquired any ads, {auth.user?.name ? auth.user?.name : auth.user?.username}</p>
           </div>
         </>
       ) : (
         <>
           <div className="text-center">
-            <p>You have contacted {ads?.length} ads</p>
+            <p>You have enquired {ads?.length} ads</p>
           </div>
           <div className="row">
             {ads?.map((ad) => (

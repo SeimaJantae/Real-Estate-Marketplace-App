@@ -298,3 +298,25 @@ export const wishlistAds = async (req, res) => {
     console.log(error);
   }
 };
+
+export const search = async (req, res) => {
+  try {
+    const { searchWord } = req.params;
+    console.log(searchWord);
+    const adsForSell = await Ad.find({ $text: { $search: searchWord }, action: "Sell" })
+      .select("-photos.Key -photos.key -photos.ETag -photos.Bucket")
+      .populate("postedBy", "name username email phone company")
+      .sort({ createdAt: -1 })
+      .limit(12);
+
+    const adsForRent = await Ad.find({ $text: { $search: searchWord }, action: "Rent" })
+      .select("-photos.Key -photos.key -photos.ETag -photos.Bucket")
+      .populate("postedBy", "name username email phone company")
+      .sort({ createdAt: -1 })
+      .limit(12);
+
+    res.json({ adsForSell, adsForRent });
+  } catch (err) {
+    console.log(err);
+  }
+};

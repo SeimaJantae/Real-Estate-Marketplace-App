@@ -34,7 +34,7 @@ const DashBoard = () => {
       {!seller ? (
         <>
           <div className="d-flex justify-content-center align-item-center vh-100">
-            <p> Welcome REMP app, {auth.user?.name ? auth.user?.name : auth.user?.username}</p>
+            <p> You have not created any ads</p>
           </div>
         </>
       ) : (

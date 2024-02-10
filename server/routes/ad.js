@@ -20,4 +20,6 @@ router.delete("/ad/:adId", requireSignIn, ad.remove);
 router.get("/enquired-ads", requireSignIn, ad.enquiredAds);
 router.get("/wishlist-ads", requireSignIn, ad.wishlistAds);
 
+router.get("/ad/search/:searchWord", ad.search);
+
 export default router;

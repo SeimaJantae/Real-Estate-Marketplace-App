@@ -5,7 +5,7 @@ export default function UserAdCard({ ad }) {
   return (
     <div className="col-lg-3 p-4 gx-4" key={ad._id}>
       <Link to={`/user/ad/${ad.slug}`} style={{ textDecoration: "none" }}>
-        <Badge.Ribbon text={`${ad?.type} for ${ad?.action}`} color={ad?.action === "Sell" ? "blue" : "red"}>
+        <Badge.Ribbon text={`${ad?.type} for ${ad?.action}`} color={ad?.action === "Sell" ? "red" : "blue"}>
           <div className="card hoverable shadow">
             <img
               src={ad?.photos?.[0]?.Location}
@@ -14,9 +14,12 @@ export default function UserAdCard({ ad }) {
             />
             <div className="card-body">
               <div className="d-flex flex-column">
-                <h4>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h4>
+                <h5>
+                  {Intl.NumberFormat("en-US").format(ad?.price)} {ad?.action === "Sell" ? "Bath" : "Bath/month"}
+                </h5>
                 <small>{ad?.title}</small>
                 <small>{ad?.address}</small>
+                <small>{ad?.description}</small>
               </div>
             </div>
           </div>

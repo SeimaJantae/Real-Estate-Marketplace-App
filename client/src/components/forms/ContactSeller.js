@@ -54,7 +54,7 @@ const ContactSeller = ({ ad }) => {
 
   return (
     <div className="mt-4">
-      <h5> Contect {ad?.postedBy?.name ? ad?.postedBy?.name : ad?.postedBy?.username}</h5>
+      <h5> Enquire of {ad?.postedBy?.name ? ad?.postedBy?.name : ad?.postedBy?.username}</h5>
       <form onSubmit={handleSubmit}>
         <textarea
           name="message"
@@ -97,7 +97,7 @@ const ContactSeller = ({ ad }) => {
           }}
         />
         <button disabled={!name || !email || loading} type="submit" className="btn btn-primary mt-4 col-12">
-          {loggedIn ? (loading ? "Processing..." : "Contact") : "Login to contact"}
+          {loggedIn ? (loading ? "Processing..." : "Enquire") : "Login to enquire"}
         </button>
       </form>
     </div>

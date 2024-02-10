@@ -58,7 +58,7 @@ const AdForm = ({ action, type }) => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Price</label>
+          <label className="form-label">{ad?.action === "Sell" ? "Price (Bath)" : "Price (Bath/month)"}</label>
           <CurrencyInput
             placeholder="Enter price"
             defaultValue={ad.price}

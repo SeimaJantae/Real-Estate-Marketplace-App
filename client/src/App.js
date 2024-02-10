@@ -22,6 +22,7 @@ import Settings from "./pages/user/Settings";
 import AdEdit from "./pages/user/ad/AdEdit";
 import Wishlist from "./pages/user/ad/Wishlist";
 import Enquiries from "./pages/user/ad/Enquiries";
+import NotFoundRoute from "./components/routers/NotFoundRoute";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
               <Route path="user/enquires" element={<Enquiries />} />
             </Route>
             <Route path="/ad/:slug" element={<AdView />} />
+            <Route path="*" element={<NotFoundRoute />} />
           </Routes>
         </div>
 

@@ -62,6 +62,8 @@ const AdEdit = ({ action, type }) => {
 
   const handleDelete = async (e) => {
     e.preventDefault();
+    const answer = window.confirm("Delete ad?");
+    if (!answer) return;
     try {
       setAd({ ...ad, loading: true });
 

@@ -97,10 +97,9 @@ const AdView = () => {
         <div className="col-lg-4">
           <div className="d-flex justify-content-between me-4">
             <div className="d-flex">
-              <button className="btn btn-info disabled">
+              <button className={ad.action === "Sell" ? "btn btn-danger" : "btn btn-info"}>
                 {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
               </button>
-              <p className="h6 mt-2 ms-2">{ad?.sold ? "Off market" : "In market"}</p>
             </div>
             <>
               {auth.user?.wishList?.includes(ad?._id) ? (
@@ -116,7 +115,9 @@ const AdView = () => {
             <p>{ad.description}</p>
           </div>
           <div className="mt-4">
-            <h4>{Intl.NumberFormat("en-US").format(ad?.price)} Bath</h4>
+            <h4>
+              {Intl.NumberFormat("en-US").format(ad?.price)} {ad?.action === "Sell" ? "Bath" : "Bath/month"}
+            </h4>
             <p className="d-flex justify-content-between mt-2 me-4">
               <span>Added {dayjs(ad?.createdAt).fromNow()}</span> <span>{ad?.views} Views</span>
             </p>

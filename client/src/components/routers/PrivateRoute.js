@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
 import toast from "react-hot-toast";
+import RedirectRoute from "./RedirectRoute";
 
 const PrivateRoute = () => {
   //context
@@ -30,7 +31,7 @@ const PrivateRoute = () => {
       toast.error("Please login first.");
     }
   };
-  return ok ? <Outlet></Outlet> : "";
+  return ok ? <Outlet></Outlet> : <RedirectRoute></RedirectRoute>;
 };
 
 export default PrivateRoute;
